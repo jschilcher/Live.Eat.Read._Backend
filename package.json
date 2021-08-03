@@ -1,0 +1,22 @@
+{
+  "name": "live.eat.read._backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jschilcher/Live.Eat.Read._Backend.git"
+  },
+  "author": "Jenelle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jschilcher/Live.Eat.Read._Backend/issues"
+  },
+  "homepage": "https://github.com/jschilcher/Live.Eat.Read._Backend#readme",
+  "dependencies": {
+    "mongoose": "^5.13.5"
+  }
+}
