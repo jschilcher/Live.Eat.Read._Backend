@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const commentSchema = require("./comment")
 
 const postSchema = mongoose.Schema(
   {
@@ -8,6 +9,7 @@ const postSchema = mongoose.Schema(
     image: { type: String, required: true },
     rating: {type: Number, required: true, default: 0},
     like: { type: Number, required: true, default: 0 },
+    comment: {tyoe: [commentSchema]},
     dateAdded: { type: Date, default: Date.now },
   },
 );
