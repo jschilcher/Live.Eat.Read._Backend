@@ -6,6 +6,15 @@ const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const { User, validateUser } = require("../models/user");
 
+router.get("/user", async (req, res) => {
+    try {
+      const user = await User.find();
+      return res.send(user);
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+  });
+
 router.post("/user", async (req, res) => {
     try {
       const { error } = validateUser(req.body);
