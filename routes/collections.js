@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const { User, validateUser } = require("../models/user");
 
-router.post("/user", auth, async (req, res) => {
+router.post("/user", async (req, res) => {
     try {
       const { error } = validateUser(req.body);
       if (error) return res.status(400).send(error);
