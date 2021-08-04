@@ -9,7 +9,7 @@ const postSchema = mongoose.Schema(
     image: { type: String, required: true },
     rating: {type: Number, required: true, default: 0},
     like: { type: Number, required: true, default: 0 },
-    comment: {tyoe: [commentSchema]},
+    // comment: { type: [commentSchema] },
     dateAdded: { type: Date, default: Date.now },
   },
 );
