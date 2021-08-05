@@ -68,13 +68,60 @@ router.post("/user", async (req, res) => {
     }
   });
 
+//   router.post("/userId/post", async (req, res) => {
+//     try{
+//         const { error } = validatePost(req.body);
+//         if (error)
+//             return res.status(400).send(error);
+        
+//         const user = await User.findById(req.params.userId);
+//         if(!user) return res.status(400).send(`The post with id "${req.params.commentId} does not exit.`);
+  
+//       const post = new Post({
+//         username: req.body.username,
+//         text: req.body.text,
+//         image: req.body.image,
+//         rating: req.body.rating,
+//       });
+  
+//       await post.save();
+//       user.post.push(post);
+  
+//       await user.save();
+//       return res.send(user.post);
+//     } catch (ex) {
+//       return res.send(500).send(`Internal Server Error: ${ex}`);
+//     }
+//   });
+
+  router.post("/post", async (req, res) => {
+    try{
+        const { error } = validatePost(req.body);
+        if (error)
+            return res.status(400).send(error);
+  
+      const post = new Post({
+        username: req.body.username,
+        text: req.body.text,
+        image: req.body.image,
+        rating: req.body.rating,
+      });
+  
+      await post.save();
+  
+      return res.send(post);
+    } catch (ex) {
+      return res.send(500).send(`Internal Server Error: ${ex}`);
+    }
+  });
+
   router.post('/:postId/comment', async (req, res) => {
     try{
         const { error } = validateComment(req.body);
         if (error)
             return res.status(400).send(error);
         
-        const post = await Post.findById(req.params.commentId);
+        const post = await Post.findById(req.params.postId);
         if(!post) return res.status(400).send(`The post with id "${req.params.commentId} does not exit.`);
 
         const comment = new Comment({

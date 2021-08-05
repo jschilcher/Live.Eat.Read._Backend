@@ -15,7 +15,7 @@ const postSchema = mongoose.Schema(
     username: { type: String, required: true, minlength: 5, maxlength: 50 },
     text: { type: String, required: true, minlength: 3, maxlength: 1000 },
     image: { type: String, required: true },
-    rating: {type: Number, required: true, default: 0},
+    rating: {type: Number, required: true},
     like: { type: Number, required: true, default: 0 },
     comment: [ { type: commentSchema} ],
     dateAdded: { type: Date, default: Date.now },
@@ -29,6 +29,7 @@ function validatePost(post) {
     username: Joi.string().min(5).max(50).required(),
     text: Joi.string().min(3).max(1000).required(),
     image: Joi.string().required(),
+    rating: Joi.number().required(),
   });
   return Schema.validate(post);
 }
