@@ -91,6 +91,6 @@ router.post("/user", async (req, res) => {
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
-})
+});
 
 module.exports = router;
