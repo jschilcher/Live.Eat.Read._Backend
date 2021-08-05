@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Joi = require('joi');
+const Joi = require("joi");
 
 
 const commentSchema = mongoose.Schema({
@@ -11,11 +11,11 @@ const commentSchema = mongoose.Schema({
 });
 
 const Comment = mongoose.model("comment", commentSchema);
+
 function validateComment(comment) {
     const Schema = Joi.object({
         username: Joi.string().min(5).max(100).required(),
-        text: Joi.String().min(3).max(1000).required(),
-        postId: Joi.String().required(),
+        text: Joi.string().min(3).max(1000).required(),
     });
     return Schema.validate(comment);
 }
@@ -23,5 +23,5 @@ function validateComment(comment) {
 
 module.exports = {
     Comment: Comment,
-    validateComment: validateComment
+    validateComment: validateComment,
 }

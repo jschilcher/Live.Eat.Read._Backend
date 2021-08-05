@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const { User, validateUser } = require("../models/user");
 const { Post, validatePost } = require("../models/post");
-const { validateComment } = require("../models/comment");
+const { Comment, validateComment } = require("../models/comment");
 
 //Get all User Data//
 router.get("/user", async (req, res) => {
