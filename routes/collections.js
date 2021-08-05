@@ -32,7 +32,7 @@ router.get("/user/:id", async (req, res) => {
 router.get("/post", async (req, res) => {
     try {
       const post = await Post.find();
-      return res.send(user);
+      return res.send(post);
     } catch (ex) {
       return res.status(500).send(`Internal Server Error: ${ex}`);
     }
