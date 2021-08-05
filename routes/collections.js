@@ -38,6 +38,15 @@ router.get("/post", async (req, res) => {
     }
   });
 
+// router.get("/post/:username", async (req, res) => {
+//     try {
+//       const post = await Post.find(req.params.username);
+//       return res.send(post);
+//     } catch (ex) {
+//       return res.status(500).send(`Internal Server Error: ${ex}`);
+//     }
+//   });
+
 //Use this to Register a user//
 router.post("/user", async (req, res) => {
     try {
@@ -148,6 +157,34 @@ router.put("/like/:postId", async (req, res) => {
       return res.status(200).send(post);
     } catch (err) {
       return res.status(500).send(`Internal Server Error: ${err}`);
+    }
+  });
+
+router.delete("/postid", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndRemove(req.params.id);
+
+    if(!post)
+    return res.status(400).send(`The post with id "${req.params.id}" does not exist`);
+    return res.send(post);
+
+  
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+    //Verify user ID
+    if (req.body.userId === req.params.id || req.body.isAdmin) {
+      try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        res.status(200).json("Account has been deleted successfully");
+      } catch (err) {
+        return res.status(500).json(err);
+      }
+    } else {
+      return res.status(403).json("You can only delete your own Account");
     }
   });
 
