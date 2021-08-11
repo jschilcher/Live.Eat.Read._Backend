@@ -174,6 +174,20 @@ router.delete("/postid", async (req, res) => {
   }
 });
 
+router.delete("/:id/user", async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User has been deleted");
+    if(!user)
+    return res.status(400).send(`The user with id "${req.params.id}" does not exist`);
+    return res.send(post);
+
+  
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 router.delete("/:id", async (req, res) => {
     //Verify user ID
     if (req.body.userId === req.params.id || req.body.isAdmin) {
