@@ -4,9 +4,11 @@ const bcrypt = require("bcrypt");
 const config = require("config");
 const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
+const multer  = require('multer');
 const { User, validateUser } = require("../models/user");
 const { Post, validatePost } = require("../models/post");
 const { Comment, validateComment } = require("../models/comment");
+const {Image} = require("../models/image");
 
 //Get all User Data//
 router.get("/user", async (req, res) => {
@@ -201,5 +203,49 @@ router.delete("/:id", async (req, res) => {
       return res.status(403).json("You can only delete your own Account");
     }
   });
+
+//image handling//
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './public/images');
+    },
+    filename: (req, file, cb) => {
+      console.log(file);
+      var filetype = '';
+      if(file.mimetype === 'image/gif') {
+        filetype = 'gif';
+      }
+      if(file.mimetype === 'image/png') {
+        filetype = 'png';
+      }
+      if(file.mimetype === 'image/jpeg') {
+        filetype = 'jpg';
+      }
+      cb(null, 'image-' + Date.now() + '.' + filetype);
+    }
+});
+
+var upload = multer({storage: storage});
+
+router.post("/upload", upload.single("file"), async (req, res) => {
+    console.log('Route hit!', req.body.image);
+
+    try {
+      const url = req.protocol + "://" + req.get("host")
+      const image = new Image({
+        image: url + "/public/images" + req.file.filename,
+      });
+
+      await image.save()
+      
+      return res.status(200).send(image)
+
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+    
+  })
+
 
 module.exports = router;
