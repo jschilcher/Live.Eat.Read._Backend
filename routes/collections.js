@@ -20,6 +20,15 @@ router.get("/user", async (req, res) => {
     }
   });
 
+  router.get("/image", async (req, res) => {
+    try {
+      const image = await Image.find();
+      return res.send(image);
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+  });
+
 //Get specific User//
 router.get("/user/:id", async (req, res) => {
     try {
@@ -122,7 +131,7 @@ router.post("/user", async (req, res) => {
   
       return res.send(post);
     } catch (ex) {
-      return res.send(500).send(`Internal Server Error: ${ex}`);
+      return res.status(500).send(`Internal Server Error: ${ex}`);
     }
   });
 
