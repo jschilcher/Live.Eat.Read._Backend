@@ -4,7 +4,7 @@ const Joi = require("joi");
 
 const commentSchema = mongoose.Schema({
 
-    username: { type: String, unique: true, required: true, minlength: 5, maxlength: 50 },
+    username: { type: String, required: true, minlength: 5, maxlength: 50 },
     text: { type: String, required: true, minlength: 3, maxlength:1000 },
     dateAdded: { type: Date, default: Date.now },
 

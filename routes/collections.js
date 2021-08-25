@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const multer  = require('multer');
 const { User, validateUser } = require("../models/user");
 const { Post, validatePost } = require("../models/post");
-const { Comment, validateComment } = require("../models/comment");
+// const { Comment, validateComment } = require("../models/comment");
 const {Image} = require("../models/image");
 
 //Get all User Data//
@@ -110,7 +110,7 @@ router.post("/user", async (req, res) => {
 //       await user.save();
 //       return res.send(user.post);
 //     } catch (ex) {
-//       return res.send(500).send(`Internal Server Error: ${ex}`);
+//       return res.status(500).send(`Internal Server Error: ${ex}`);
 //     }
 //   });
 
@@ -128,6 +128,8 @@ router.post("/user", async (req, res) => {
       });
   
       await post.save();
+
+      // post.push(post);
   
       return res.send(post);
     } catch (ex) {
@@ -135,30 +137,30 @@ router.post("/user", async (req, res) => {
     }
   });
 
-  router.post('/:postId/comment', async (req, res) => {
-    try{
-        const { error } = validateComment(req.body);
-        if (error)
-            return res.status(400).send(error);
+//   router.post('/:postId/comment', async (req, res) => {
+//     try{
+//         const { error } = validateComment(req.body);
+//         if (error)
+//             return res.status(400).send(error);
         
-        const post = await Post.findById(req.params.postId);
-        if(!post) return res.status(400).send(`The post with id "${req.params.commentId} does not exit.`);
+//         const post = await Post.findById(req.params.postId);
+//         if(!post) return res.status(400).send(`The post with id "${req.params.commentId} does not exit.`);
 
-        const comment = new Comment({
-            username: req.body.username,
-            text: req.body.text,
-        })
+//         const comment = new Comment({
+//             username: req.body.username,
+//             text: req.body.text,
+//         })
 
-        await comment.save();
+//         await comment.save();
 
-        post.comment.push(comment);
+//         post.comment.push(comment);
 
-        await post.save();
-        return res.send(post.comment);
-    } catch (ex) {
-        return res.status(500).send(`Internal Server Error: ${ex}`);
-    }
-});
+//         await post.save();
+//         return res.send(post.comment);
+//     } catch (ex) {
+//         return res.status(500).send(`Internal Server Error: ${ex}`);
+//     }
+// });
 
 router.put("/like/:postId", async (req, res) => {
     try {
